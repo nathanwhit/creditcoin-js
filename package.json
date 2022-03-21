@@ -7,11 +7,13 @@
   "license": "MIT",
   "scripts": {
     "watch": "parcel watch",
-    "build": "yarn generate:meta && parcel build",
+    "build": "yarn generate:defs && yarn generate:meta && parcel build",
+    "generate:defs": "ts-node --skip-project node_modules/.bin/polkadot-types-from-defs --package sample-polkadotjs-typegen/interfaces --input ./src/interfaces --endpoint ./creditcoin.json",
     "generate:meta": "ts-node --skip-project node_modules/.bin/polkadot-types-from-chain --package creditcoin-typegen/interfaces --endpoint ./creditcoin.json --output ./src/interfaces",
     "check": "tsc --noEmit --pretty",
     "lint": "eslint",
-    "runit": "yarn build && node dist/main.js"
+    "runit:meta": "yarn build && node dist/main.js",
+    "runit": "parcel build && node dist/main.js"
   },
   "devDependencies": {
     "@parcel/transformer-typescript-types": "2.3.2",
